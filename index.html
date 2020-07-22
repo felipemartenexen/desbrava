@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+ <head>
+
+    <meta charset='utf-8' />
+    <title>Pontos Desbrava</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    
+    <!--MapBox-->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
+    
+    <!--Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script> 
+
+    <!--Jquery-->    
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    
+    <!--Sidebar-->
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js'></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' rel='stylesheet' />
+    
+    <!--Font Awesome-->
+    <link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' />
+
+    <!--Sidebar-->
+    <link rel="stylesheet" href="https://sanozmen.github.io/portfolio/assets/css/leaflet-sidebar.css" />
+    <script src="https://sanozmen.github.io/portfolio/assets/js/leaflet-sidebar.js"></script>
+
+    <!--Turf-->
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+
+    <!--MapBox Draw-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
+    
+    <!--LayerTree-->
+    <link rel="stylesheet" href="dist/css/styles.min.css">
+    <script src="dist/js/scripts.min.js"></script>
+
+    <!--Main-->
+    <link rel="stylesheet" href="dist/css/main.css">
+    <script src="dist/js/main.js"></script>
+
+    <!--FONTE DA BASE DE DADOS-->
+    <script src="data/car_dealership_data.js"></script>
+    <script src="data/cbc_store_data.js"></script>
+    <script src="data/espaco_laser_stores_data.js"></script>
+    <script src="data/kop_store_data.js"></script>
+    <script src="data/list_shools_data.js"></script>
+    <script src="data/media_data.js"></script>
+    <script src="data/piticas_stores_data.js"></script>
+    <script src="data/toyota_stores_data.js"></script>
+
+    <style>
+
+      body { 
+        margin:0; 
+        padding:0;
+        }
+      #map { 
+        position:absolute; 
+        top:0; bottom:0;
+        width:400px; 
+        height: 300px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+  <div id='map'></div>  
+
+  <div id="sidebar" class="leaflet-sidebar collapsed">
+
+    <!-- Painel -->
+    <div class="leaflet-sidebar-tabs">
+        <ul role="tablist"> <!-- top aligned tabs -->
+            <li><a href="#home" role="tab"><i class="fa fa-map"></i></a></li>
+            <li><a href="#painelRaio" role="tab"><i class="fa fa-circle-o-notch"></i></a></li>
+        </ul>
+        <ul role="tablist"> <!-- bottom aligned tabs -->
+            <li><a href="https://desbravadata.com.br/" role="tab"><i><img style="height: 30px;" src="https://raw.githubusercontent.com/felipemartenexen/freelancer/master/67794992.png" alt=""></i></a></li>
+        </ul>
+    </div>
+
+    <!-- Painel -->
+    <div class="leaflet-sidebar-content">
+      
+         <!-- Seção Camadas -->
+        <div class="leaflet-sidebar-pane" id="home">
+            <h1 class="leaflet-sidebar-header">Camadas<div class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+        <div id="mapboxgl-legend" class="ui-sortable"><div id="categoria-ii" class="layer-directory grb ui-sortable-handle ui-sortable" initial-index="70"><div class="directory-name">Categoria II<i class="fa toggle-directory-open" aria-hidden="true" <="" i=""></i></div><div id="toyota_stores" class="layer-item grb ui-sortable-handle" initial-index="7"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#003366;-webkit-text-stroke: 1px ;"></i><span class="name">Toyota Stores</span></div><div id="piticas_stores" class="layer-item grb ui-sortable-handle" initial-index="6"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#00cc99;-webkit-text-stroke: 1px ;"></i><span class="name">Piticas Stores</span></div><div id="media" class="layer-item grb ui-sortable-handle" initial-index="5"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#003300;-webkit-text-stroke: 1px ;"></i><span class="name">Media</span></div></div><div id="categoria-i" class="layer-directory grb ui-sortable-handle ui-sortable" initial-index="40"><div class="directory-name">Categoria I<i class="fa toggle-directory-open" aria-hidden="true" <="" i=""></i></div><div id="list_schools" class="layer-item grb ui-sortable-handle" initial-index="4"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#99ff66;-webkit-text-stroke: 1px ;"></i><span class="name">List Schools</span></div><div id="kop_store" class="layer-item grb ui-sortable-handle" initial-index="3"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#cc9900;-webkit-text-stroke: 1px ;"></i><span class="name">KOP Store</span></div><div id="espaco_laser_stores" class="layer-item grb ui-sortable-handle" initial-index="2"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#ff9966;-webkit-text-stroke: 1px ;"></i><span class="name">Espaço Laser Stores</span></div><div id="cbc_store" class="layer-item grb ui-sortable-handle" initial-index="1"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#cc00cc;-webkit-text-stroke: 1px ;"></i><span class="name">CBC Store</span></div><div id="car_dealership" class="layer-item grb ui-sortable-handle" initial-index="0"><input class="toggle-layer" type="checkbox"><i class="" aria-hidden="true" style="color:#3366ff;-webkit-text-stroke: 1px ;"></i><span class="name">Car Dealership</span></div></div></div>
+    
+      </div>
+
+        <!-- Seção Raio -->
+      <div class="leaflet-sidebar-pane" id="painelRaio">
+      
+      <h1 class="leaflet-sidebar-header">Selecionar Raio<div class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+      
+      <p style="font-size: 15px; margin-bottom: 0rem; margin-top: 10px;"><label id="raioValor" style="padding-left:20px; font-size: 15px;"></label> km</p>
+      
+      <input id="raio" type="range" class="slider" min="0" max="100" step="1" value="100" oninput="document.getElementById('raioValor').innerHTML = this.value"/>
+      
+      <button style="align-items: center;" id="btnRaio" onclick="calcularRaio()"  type="button" class="btn btn-outline-secondary">Aplicar</button>  
+         
+          <div class='heading'>
+              <p style="font-size: 15px;">Resultado</p>
+          </div>
+
+          <div id='categoria' style="font-size: 15px;" class='categoria'></div>
+
+          <table id="myTable" style="width:100%; "> </table>
+          
+         
+          <!--
+          <div id='listings' style="font-size: 15px;" class='listings'></div>
+          -->
+    </div>
+
+      <div class="leaflet-sidebar-pane" id="profile">
+          <h1 class="leaflet-sidebar-header">Filtro<div class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+      </div>
+  
+    </div>
+  
+  </div>
+
+    <script src="dist/js/main.js"></script>
+
+</body>
+</html>
